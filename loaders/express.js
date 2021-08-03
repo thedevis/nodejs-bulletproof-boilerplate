@@ -13,9 +13,10 @@ async function expressInit({ expressApp: app }) {
     // Enable Cross Origin Resource Sharing to all origins by default
     app.use(cors());
 
-    // Middleware that transforms the raw string of req.body into json
-    app.use(bodyParser.json());
 
+    app.use(express.json());
+    app.use(express.urlencoded({extended: true}));
+    
     // Load API routes
     app.use(config.api.prefix, routes());
 
