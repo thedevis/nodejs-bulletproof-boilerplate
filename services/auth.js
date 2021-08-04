@@ -6,13 +6,13 @@ const argon2 = require('argon2');
 const {EventDispatcher, EventDispatcherInterface} = require('../decorators/EventDispatcher');
 const events =  require('../subscribers/events')
 class AuthService {
-    constructor() {
+    constructor(Container) {
         this.userModel = Container.get('userModel');
         this.logger = Container.get('logger');
         this.eventDispatcher = EventDispatcherInterface;
     }
     async SignUp(userInputDTO) {
-        try {
+            const salt = randomBytes(32);
             this.logger.silly('Hashing password');
             const hashedPassword = await argon2.hash(userInputDTO.password, { salt });
             this.logger.silly('Creating user db record');
@@ -30,7 +30,7 @@ class AuthService {
 
             this.logger.silly('sending welcome email');
 
-            this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
+            //this.eventDispatcher.dispatch(events.user.signUp, { user: userRecord });
             
             //TODO: implement logic of sending email
 
@@ -44,9 +44,6 @@ class AuthService {
             delete user.password;
             delete user.salt;
             return { user, token };
-        } catch (e) {
-
-        }
     }
     async SignIn(email, password) {
         const userRecord = await this.userModel.findOne({ email });
@@ -105,5 +102,5 @@ class AuthService {
     }
 
 }
-Container.set('AuthService',AuthService);
+//Container.set('AuthService',new AuthService());
 module.exports = AuthService;
