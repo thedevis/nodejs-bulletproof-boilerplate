@@ -27,7 +27,8 @@ async function init({ expressApp: app }) {
             taskModel,
             userModel
             //add as many as model
-        ]
+        ],
+        services:require('../services')
     })
 
     await expressLoader({ expressApp: app });

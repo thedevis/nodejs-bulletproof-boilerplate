@@ -6,7 +6,7 @@ const argon2 = require('argon2');
 const {EventDispatcher, EventDispatcherInterface} = require('../decorators/EventDispatcher');
 const events =  require('../subscribers/events')
 class AuthService {
-    constructor(Container) {
+    constructor() {
         this.userModel = Container.get('userModel');
         this.logger = Container.get('logger');
         this.eventDispatcher = EventDispatcherInterface;
@@ -102,5 +102,4 @@ class AuthService {
     }
 
 }
-//Container.set('AuthService',new AuthService());
 module.exports = AuthService;
