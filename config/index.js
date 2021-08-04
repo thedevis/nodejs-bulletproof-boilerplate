@@ -23,7 +23,8 @@ const envVarsSchema = joi.object({
     LOGGER_ENABLED: joi.boolean()
         .truthy('true')
         .falsy('false')
-        .default(true)
+        .default(true),
+    JWT_SECRET_KEY:joi.string().required()
 }).unknown()
     .required()
 
@@ -52,5 +53,7 @@ module.exports = {
     api: {
         prefix: '/api',
     },
+    jwtSecret:process.env.JWT_SECRET_KEY
+
 }
 
